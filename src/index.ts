@@ -1,6 +1,30 @@
 import * as NGL from 'ngl';
 
-const stage = new NGL.Stage('root', {
+const root = document.getElementById('root');
+
+// Load PDB file via drag-and-drop
+root.ondragover = (event) => {
+  event.preventDefault();
+}
+root.ondrop = (event) => {
+  event.preventDefault();
+
+  const files = event.dataTransfer.files;
+
+  if (!files) {
+    return;
+  }
+
+  const firstFile = files[0];
+
+  stage.loadFile(firstFile)
+  .then((structureComponent) => {
+    structureComponent.addRepresentation('cartoon');
+    structureComponent.autoView();
+  });
+}
+
+const stage = new NGL.Stage(root, {
   ambientColor: 0xffffff,
   ambientIntensity: 0.5,
   backgroundColor: 0x151520,
@@ -16,5 +40,3 @@ const stage = new NGL.Stage('root', {
   tooltip: false,
   zoomSpeed: 1.0,
 });
-
-stage.loadFile('rcsb://1l2y', {defaultRepresentation: true});
