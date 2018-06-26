@@ -15,12 +15,17 @@ root.ondrop = (event) => {
     return;
   }
 
-  const firstFile = files[0];
+  const filePromises = [];
+  for (let i = 0; i < files.length; i++) {
+    filePromises.push(stage.loadFile(files[i]));
+  }
 
-  stage.loadFile(firstFile)
-  .then((structureComponent) => {
-    structureComponent.addRepresentation('cartoon');
-    structureComponent.autoView();
+  Promise.all(filePromises)
+  .then((structureComponents) => {
+    structureComponents.forEach((structureComponent) => {
+      structureComponent.addRepresentation('cartoon');
+    });
+    stage.autoView();
   });
 }
 
