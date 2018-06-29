@@ -9,6 +9,7 @@
     "typescript": "^2.9.2"
   },
   "dependencies": {
+    "@types/node": "^10.5.0",
     "ngl": "^2.0.0-dev.32"
   }
 }

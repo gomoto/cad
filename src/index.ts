@@ -1,6 +1,6 @@
-import * as NGL from 'ngl';
+const NGL = require('ngl');
 
-const root = document.getElementById('root');
+const root = <HTMLElement> document.getElementById('root');
 
 // Load PDB file via drag-and-drop
 root.ondragover = (event) => {
@@ -10,26 +10,41 @@ root.ondrop = (event) => {
   event.preventDefault();
 
   const files = event.dataTransfer.files;
-
   if (!files) {
     return;
   }
-
-  const filePromises = [];
+  const filePromises: Promise<ngl.StructureComponent | ngl.SurfaceComponent | ngl.VolumeComponent>[] = [];
   for (let i = 0; i < files.length; i++) {
     filePromises.push(stage.loadFile(files[i]));
   }
-
   Promise.all(filePromises)
-  .then((structureComponents) => {
-    structureComponents.forEach((structureComponent) => {
-      structureComponent.addRepresentation('cartoon');
+  .then((components) => {
+    components.forEach((component) => {
+      switch (component.type) {
+        case 'structure': {
+          component.addRepresentation('cartoon');
+          break;
+        }
+        case 'surface': {
+          component.addRepresentation('surface');
+          break;
+        }
+        case 'volume': {
+          component.addRepresentation('dot');
+          break;
+        }
+        default: {
+          throw new Error('unknown component type');
+        }
+      }
     });
     stage.autoView();
   });
 }
 
-const stage = new NGL.Stage(root, {
+const Stage: ngl.Stage = NGL.Stage;
+
+const stage = new Stage(root, {
   ambientColor: 0xffffff,
   ambientIntensity: 0.5,
   backgroundColor: 0x151520,
