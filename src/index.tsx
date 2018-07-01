@@ -4,7 +4,7 @@ import { Provider, connect } from 'react-redux';
 import { createStore, Dispatch } from 'redux';
 import { App } from './App';
 import { reducer } from './reducer';
-import { loadFile } from './actions';
+import { loadFiles } from './actions';
 import { State } from './state';
 
 
@@ -18,8 +18,8 @@ const mapStateToProps = (state: State) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
-    loadFile: (files: File[]) => {
-      dispatch(loadFile(files))
+    loadFiles: (files: File[]) => {
+      dispatch(loadFiles(files))
     }
   };
 };

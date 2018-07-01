@@ -5,7 +5,7 @@ const NGL = require('ngl')
 
 interface AppProps {
   structures: Structure[];
-  loadFile: (files: File[]) => void;
+  loadFiles: (files: File[]) => void;
 }
 
 class App extends React.PureComponent<AppProps, {}> {
@@ -36,8 +36,7 @@ class App extends React.PureComponent<AppProps, {}> {
       for (let i = 0; i < files.length; i++) {
         fileArray.push(files[i]);
       }
-      // TODO: pluralize action creator
-      this.props.loadFile(fileArray);
+      this.props.loadFiles(fileArray);
     }
 
     // Initialize NGL stage.

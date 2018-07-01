@@ -8,7 +8,7 @@ export interface LoadFilesAction extends Redux.Action {
 }
 
 // NOTE: action creators must return plain objects, not classes
-export function loadFile(files: File[]): LoadFilesAction {
+export function loadFiles(files: File[]): LoadFilesAction {
   return {
     type: LOAD_FILES,
     files
