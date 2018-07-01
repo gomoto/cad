@@ -7,17 +7,11 @@ interface AppProps {
   loadFile: (files: File[]) => void;
 }
 
-interface AppState {}
-
-class App extends React.PureComponent<AppProps, AppState> {
+class App extends React.PureComponent<AppProps, {}> {
   private _viewer: React.RefObject<HTMLDivElement>
 
   constructor(props: AppProps) {
-    super(props)
-
-    // intial state
-    this.state = {}
-
+    super(props);
     this._viewer = React.createRef();
   }
 
