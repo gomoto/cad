@@ -9,7 +9,7 @@ interface AppProps {
 
 interface AppState {}
 
-class App extends React.Component<AppProps, AppState> {
+class App extends React.PureComponent<AppProps, AppState> {
   private _viewer: React.RefObject<HTMLDivElement>
 
   constructor(props: AppProps) {
