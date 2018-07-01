@@ -1,7 +1,11 @@
 import * as React from 'react'
+import { Structure } from './state';
 const NGL = require('ngl')
 
-interface AppProps {}
+interface AppProps {
+  structures: Structure[];
+  loadFile: (files: File[]) => void;
+}
 
 interface AppState {}
 
@@ -32,6 +36,7 @@ class App extends React.Component<AppProps, AppState> {
       if (!files) {
         return;
       }
+      this.props.loadFile([files[0]]);
       const filePromises: Promise<ngl.StructureComponent | ngl.SurfaceComponent | ngl.VolumeComponent>[] = [];
       for (let i = 0; i < files.length; i++) {
         filePromises.push(stage.loadFile(files[i]));
