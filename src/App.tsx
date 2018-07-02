@@ -1,5 +1,8 @@
 import * as React from 'react'
 import { Structure } from './state';
+
+// Components
+import { StructureList } from './StructureList';
 import { Viewer } from './Viewer';
 
 
@@ -44,6 +47,9 @@ export class App extends React.PureComponent<AppProps> {
         className="app"
         ref={this._rootElement}
       >
+        <StructureList
+          structures={this.props.structures}
+        />
         <Viewer
           structures={this.props.structures}
         />
