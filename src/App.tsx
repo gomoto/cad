@@ -3,12 +3,12 @@ import { Structure } from './state';
 import { Viewer } from './Viewer';
 
 
-interface AppProps {
+export interface AppProps {
   structures: Structure[];
   loadFiles: (files: File[]) => void;
 }
 
-class App extends React.PureComponent<AppProps> {
+export class App extends React.PureComponent<AppProps> {
   private _rootElement: React.RefObject<HTMLMainElement>;
 
   constructor(props: AppProps) {
@@ -51,5 +51,3 @@ class App extends React.PureComponent<AppProps> {
     );
   }
 }
-
-export { App };
