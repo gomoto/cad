@@ -9,24 +9,27 @@ interface AppProps {
 }
 
 class App extends React.PureComponent<AppProps, {}> {
+  private _rootElement: React.RefObject<HTMLMainElement>;
   private _viewer: React.RefObject<HTMLDivElement>;
   private _stage: ngl.Stage | null;
 
   constructor(props: AppProps) {
     super(props);
+    this._rootElement = React.createRef();
     this._viewer = React.createRef();
     this._stage = null; // initialized in componentDidMount
   }
 
   componentDidMount(): void {
-    const viewerElement = this._viewer.current as HTMLDivElement;
+    const rootElement = this._rootElement.current as HTMLElement;
+    const viewerElement = this._viewer.current as HTMLElement;
 
-    // Load PDB file via drag-and-drop
-    viewerElement.ondragover = (event) => {
+    // Load files via drag-and-drop
+    rootElement.ondragover = (event) => {
       event.preventDefault();
     }
 
-    viewerElement.ondrop = (event) => {
+    rootElement.ondrop = (event) => {
       event.preventDefault();
       const files = event.dataTransfer.files;
       if (!files) {
@@ -89,7 +92,10 @@ class App extends React.PureComponent<AppProps, {}> {
 
   render() {
     return (
-      <main className="app">
+      <main
+        className="app"
+        ref={this._rootElement}
+      >
         <div
           className="viewer"
           ref={this._viewer}
