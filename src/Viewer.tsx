@@ -45,7 +45,9 @@ export class Viewer extends React.PureComponent<ViewerProps> {
   componentDidUpdate(oldProps: ViewerProps): void {
     const stage = this._stage as ngl.Stage;
     const enteringStructures = differenceBy(this.props.structures, oldProps.structures, 'id'); // current structures with ids not among those of previous structures
-    // const exitingStructures = differenceBy(oldProps.structures, this.props.structures, 'id'); // previous structures with ids not among those of current structures
+    const exitingStructures = differenceBy(oldProps.structures, this.props.structures, 'id'); // previous structures with ids not among those of current structures
+
+    // Handle entering structures
     const loadFiles = enteringStructures.map(structure => stage.loadFile(structure.data).then(component => ({structure, component})));
     Promise.all(loadFiles).then((inputs) => {
       inputs.forEach((input) => {
@@ -72,6 +74,12 @@ export class Viewer extends React.PureComponent<ViewerProps> {
       });
       stage.autoView();
     });
+
+    // Handle exiting structures
+    exitingStructures.forEach(structure => {
+      stage.removeComponent(this._nglComponents[structure.id]);
+    });
+    stage.autoView();
   }
 
   render() {

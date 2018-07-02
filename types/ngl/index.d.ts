@@ -6,6 +6,7 @@ export as namespace ngl;
 export interface Stage {
   new (element: HTMLElement, params?: {}): Stage;
   loadFile(file: File | Blob | string): Promise<StructureComponent | SurfaceComponent | VolumeComponent>;
+  removeComponent(component: Component): void;
   autoView(): void;
 }
 
