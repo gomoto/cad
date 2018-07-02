@@ -99,8 +99,7 @@ class App extends React.PureComponent<AppProps, {}> {
         <div
           className="viewer"
           ref={this._viewer}
-        >
-        </div>
+        />
       </main>
     );
   }
