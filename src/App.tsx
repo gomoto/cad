@@ -8,7 +8,7 @@ interface AppProps {
   loadFiles: (files: File[]) => void;
 }
 
-class App extends React.PureComponent<AppProps, {}> {
+class App extends React.PureComponent<AppProps> {
   private _rootElement: React.RefObject<HTMLMainElement>;
   private _viewer: React.RefObject<HTMLDivElement>;
   private _stage: ngl.Stage | null;
