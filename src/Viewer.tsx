@@ -11,11 +11,15 @@ export interface ViewerProps {
 export class Viewer extends React.PureComponent<ViewerProps> {
   private _viewer: React.RefObject<HTMLDivElement>;
   private _stage: ngl.Stage | null;
+  private _nglComponents: {
+    [structureId: string]: ngl.Component;
+  };
 
   constructor(props: ViewerProps) {
     super(props);
     this._viewer = React.createRef();
     this._stage = null; // initialized in componentDidMount
+    this._nglComponents = {};
   }
 
   componentDidMount(): void {
@@ -42,9 +46,12 @@ export class Viewer extends React.PureComponent<ViewerProps> {
     const stage = this._stage as ngl.Stage;
     const enteringStructures = differenceBy(this.props.structures, oldProps.structures, 'id'); // current structures with ids not among those of previous structures
     // const exitingStructures = differenceBy(oldProps.structures, this.props.structures, 'id'); // previous structures with ids not among those of current structures
-    const loadFiles = enteringStructures.map(structure => stage.loadFile(structure.data));
-    Promise.all(loadFiles).then((components) => {
-      components.forEach((component) => {
+    const loadFiles = enteringStructures.map(structure => stage.loadFile(structure.data).then(component => ({structure, component})));
+    Promise.all(loadFiles).then((inputs) => {
+      inputs.forEach((input) => {
+        const component = input.component;
+        const structure = input.structure;
+        this._nglComponents[structure.id] = component;
         switch (component.type) {
           case 'structure': {
             component.addRepresentation('cartoon');
