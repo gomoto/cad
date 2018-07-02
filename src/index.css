@@ -11,10 +11,10 @@ body,
   display: flex;
   align-items: stretch;
 }
-.viewer,
 .structure-list {
   flex: 0 0 auto;
-}
-.structure-list {
   width: 200px;
+}
+.viewer {
+  flex: 10 auto;
 }

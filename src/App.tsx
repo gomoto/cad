@@ -8,7 +8,8 @@ import { Viewer } from './Viewer';
 
 export interface AppProps {
   structures: Structure[];
-  loadFiles: (files: File[]) => void;
+  loadFiles(files: File[]): void;
+  removeStructures(structures: Structure[]): void;
 }
 
 export class App extends React.PureComponent<AppProps> {
@@ -49,6 +50,7 @@ export class App extends React.PureComponent<AppProps> {
       >
         <StructureList
           structures={this.props.structures}
+          removeStructures={this.props.removeStructures.bind(this.props)}
         />
         <Viewer
           structures={this.props.structures}

@@ -4,8 +4,8 @@ import { Provider, connect } from 'react-redux';
 import { createStore, Dispatch } from 'redux';
 import { App } from './App';
 import { reducer } from './reducer';
-import { loadFiles } from './actions';
-import { State } from './state';
+import { loadFiles, removeStructures } from './actions';
+import { State, Structure } from './state';
 
 
 const store = createStore(reducer);
@@ -20,6 +20,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     loadFiles: (files: File[]) => {
       dispatch(loadFiles(files))
+    },
+    removeStructures: (structures: Structure[]) => {
+      dispatch(removeStructures(structures))
     }
   };
 };
